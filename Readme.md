@@ -12,12 +12,11 @@ that adds some useful automatic integrations with Rails:
 - Automatically record the source location that initiated the change so you can
   figure out what caused caused the change later when inspecting a version
   record
-- Never forget to set the actor (whodunnit) when making changes in the `rails
+- (Optional) Never forget to set the actor (whodunnit) when making changes in the `rails
   console`. It will prompt you to choose an actor user as soon as you try to
   make a change that would record a PaperTrail Version. (Enter `system` if you
   don't want any particular user recorded as the actor.)
-- Automatically ask for a reason whenever you make a change (currently only asks
-  the first time you make a change).
+- (Optional) Automatically ask for a reason whenever you make a change
 
 ## Installation
 
@@ -54,9 +53,15 @@ Add to `config/initializers/paper_trail.rb` and change as needed:
 
 ```ruby
 PaperTrail::Rails.configure do |config|
-  config.user_filter_for_console = ->(users) { users.admins }
-  config.ask_reason = true
-  config.require_reason = true
+  config.console.ask_for_user      = true
+  config.console.require_user      = false
+  config.console.auto_reset_user   = false
+
+  config.console.ask_for_reason    = true
+  config.console.require_reason    = false
+  config.console.auto_reset_reason = true
+
+  config.user_filter = ->(users) { users.admins }
 end
 ```
 

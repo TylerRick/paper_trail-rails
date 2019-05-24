@@ -2,34 +2,27 @@ module PaperTrail
   module Rails
     class Configuration
       def initialize
-        #self.ask_user = true
-        self.user_filter_for_console = :itself
-        self.paper_trail_user_for_test_console = ->(users) {
+        config = self
+
+        config.select_user_filter = :itself
+        config.select_user_other_allowed_values = ['system', 'admin']
+        config.user_for_test = ->(users) {
           users.admins.last
         }
-
-        self.ask_reason = true
-        self.require_reason = false
       end
 
-      #attr_accessor :ask_user
-
-      # Filter users with this proc. For example:
+      # Filter proc to use to show a list of users in select_user helper. For example:
       #   ->(users) { users.admins) }
-      attr_accessor :user_filter_for_console
+      # or
+      #   ->(users) { users.none) }
+      # Can be also be a symbol or anything that responds to to_proc.
+      attr_accessor :select_user_filter
+
+      attr_accessor :select_user_other_allowed_values
 
       # A proc that returns a user if you ever run `rails console` in test
       # environment (where you probably won't have any real data)
-      attr_accessor :paper_trail_user_for_test_console
-
-      attr_accessor :ask_reason
-      attr_accessor :require_reason
-
-      class << self
-        def configure
-          yield self
-        end
-      end
+      attr_accessor :user_for_test
     end
   end
 end

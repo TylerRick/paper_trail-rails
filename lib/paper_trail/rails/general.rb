@@ -2,28 +2,30 @@
 
 module PaperTrail
   module Rails
-    class << self
-      def select_user(filter: :itself, other_allowed_values: [], other_values_prompt: '')
-        User.logger.silence do
-          puts 'id. user'
-          filter.to_proc.(User.all).default_order.each do |user|
-            puts "%4s. %s" % [user.id, user.inspect]
+    module General
+      class << self
+        def select_user(filter: :itself, other_allowed_values: [], prompt: 'Please enter a User id', required: true)
+          User.logger.silence do
+            puts 'id. user'
+            filter.to_proc.(User.all).default_order.each do |user|
+              puts "%4s. %s" % [user.id, user.inspect]
+            end
           end
-        end
-        other_values_prompt = " (#{other_values_prompt})" if other_values_prompt.present?
 
-        user = nil
-        until user.present? do
-          print "Please enter the id of one of the users above (or any valid User id)#{other_values_prompt}: "
-          input = gets.chomp
-          case input
-          when *other_allowed_values
-            user = input
-          else
-            user = User.find(input) rescue nil
+          user = nil
+          until user.present? do
+            print "#{prompt}: "
+            input = gets.chomp
+            case input
+            when *other_allowed_values
+              user = input
+            else
+              user = User.find(input) rescue nil
+            end
+            break unless required
           end
+          user
         end
-        user
       end
     end
   end

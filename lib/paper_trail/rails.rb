@@ -1,12 +1,18 @@
 require 'paper_trail'
 
 require_relative 'rails/version'
-require_relative 'rails/general'
-require_relative 'rails/paper_trail_extensions'
+
+# (In alphabetical order)
 require_relative 'rails/configuration'
+require_relative 'rails/console'
+require_relative 'rails/general'
 require_relative 'rails/migration_extensions'
+require_relative 'rails/paper_trail_extensions'
 
 module PaperTrail
+  # This is the main module for this gem. Can't make it a class because
+  # paper_trail gem already defines this module; otherwise I would have made
+  # this a class.
   module Rails
     class << self
       def configuration
@@ -18,8 +24,8 @@ module PaperTrail
         yield config
       end
 
-      # Store some metadata about where the change came from, even for rake tasks, etc.
-      def set_default_paper_trail_metadata
+      # Store some metadata about where the change came from
+      def set_default_metadata
         PaperTrail.update_metadata(
           command: "#{File.basename($PROGRAM_NAME)} #{ARGV.join ' '}",
           source_location: caller.find { |line|
@@ -29,15 +35,18 @@ module PaperTrail
         )
       end
 
-      def select_paper_trail_user_or_system
-        select_user(
-          filter: config.user_filter_for_console,
-          other_allowed_values: ['system'],
-          other_values_prompt: "or 'system'"
+      def select_user(required: false)
+        other_allowed_values = config.select_user_other_allowed_values
+        other_values_prompt = " (or #{other_allowed_values.join(' or ')})" if other_allowed_values.present?
+        General.select_user(
+          filter:               config.select_user_filter,
+          other_allowed_values: other_allowed_values,
+          prompt: "Please enter a User id#{other_values_prompt}",
+          required: required
         )
       end
 
-      def get_paper_trail_reason(required: false)
+      def get_reason(required: false)
         reason = nil
         until reason.present? do
           print "What is the reason for this change? "
@@ -49,5 +58,3 @@ module PaperTrail
     end
   end
 end
-
-require_relative 'rails/railtie'

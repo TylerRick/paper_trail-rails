@@ -15,6 +15,12 @@ PaperTrail.class_eval do
     end
   end
 
+  unless methods.include?(:reset_metadata)
+    def self.reset_metadata
+      PaperTrail.request.controller_info = nil
+    end
+  end
+
   unless methods.include?(:update_metadata)
     def self.update_metadata(metadata)
       merged_metadata = (::PaperTrail.request.controller_info || {}).merge(metadata)
