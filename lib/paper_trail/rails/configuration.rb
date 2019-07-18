@@ -6,9 +6,6 @@ module PaperTrail
 
         config.select_user_filter = :itself
         config.select_user_other_allowed_values = ['system', 'admin']
-        config.user_for_test = ->(users) {
-          users.admins.last
-        }
       end
 
       # Filter proc to use to show a list of users in select_user helper. For example:

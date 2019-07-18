@@ -18,6 +18,10 @@ module PaperTrail
           config.ask_for_reason    = true
           config.require_reason    = false
           config.auto_reset_reason = true
+
+          config.user_for_test = ->(users) {
+            users.last
+          }
         end
 
         attr_accessor :ask_for_user
