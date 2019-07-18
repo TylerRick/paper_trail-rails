@@ -18,6 +18,10 @@ module PaperTrail
           config.ask_for_reason    = true
           config.require_reason    = false
           config.auto_reset_reason = true
+
+          config.user_for_test = ->(users) {
+            users.last
+          }
         end
 
         attr_accessor :ask_for_user
@@ -27,6 +31,10 @@ module PaperTrail
         attr_accessor :ask_for_reason
         attr_accessor :require_reason
         attr_accessor :auto_reset_reason
+
+        # A proc that returns a user if you ever run `rails console` in test
+        # environment (where you probably won't have any real data)
+        attr_accessor :user_for_test
 
         class << self
           def configure
