@@ -1,3 +1,8 @@
+## 0.3.0 (2019-09-16)
+- Fix: When running db:migrate:redo, command got recorded as "rails db:migrate:redo VERSION=2019…"
+  instead of as "rails db:migrate: MigrationName (up)" as intended.
+- Add `config.source_location_filter`
+
 ## 0.2.2 (2019-07-18)
 - Fix: undefined method `user_for_test' when running `rails console -e test`
 

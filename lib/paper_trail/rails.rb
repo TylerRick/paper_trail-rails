@@ -30,7 +30,7 @@ module PaperTrail
           command: "#{File.basename($PROGRAM_NAME)} #{ARGV.join ' '}",
           source_location: caller.find { |line|
             line.starts_with? ::Rails.root.to_s and
-           !line.starts_with? __FILE__
+            config.source_location_filter.(line)
           }
         )
       end
