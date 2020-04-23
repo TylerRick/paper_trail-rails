@@ -76,7 +76,7 @@ module PaperTrail
                 user = PaperTrail::Rails.select_user(required: config.console.require_user)
                 puts "Thank you, #{user}! Have a wonderful time!" if user
               end
-              user.respond.id
+              user.respond_to?(:id) ? user.id : user
             end
           )
 

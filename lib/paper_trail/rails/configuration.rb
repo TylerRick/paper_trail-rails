@@ -4,17 +4,21 @@ module PaperTrail
       def initialize
         config = self
 
+        #config.user_model = User
         config.select_user_filter = :itself
+        config.select_user_inspect = :inspect
         config.select_user_other_allowed_values = ['system', 'admin']
         config.source_location_filter = ->(line) { !line.match /paper_trail/ }
       end
 
       # Filter proc to use to show a list of users in select_user helper. For example:
-      #   ->(users) { users.admins) }
+      #   ->(users) { users.admins.default_order }
       # or
-      #   ->(users) { users.none) }
+      #   ->(users) { users.none }
       # Can be also be a symbol or anything that responds to to_proc.
       attr_accessor :select_user_filter
+
+      attr_accessor :select_user_inspect
 
       attr_accessor :select_user_other_allowed_values
 
