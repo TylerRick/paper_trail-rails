@@ -1,3 +1,10 @@
+## 0.4.0 (2020-04-23)
+- Allow user to be selected by index in addition to id
+- Add config.select_user_inspect
+- Fix: Remove .default_order which may not be defined. Included as config example instead.
+- Fix: Replace respond.id with respond_to?(:id)
+- Fix: Should use require_user rather than require_reason
+
 ## 0.3.0 (2019-09-16)
 - Fix: When running db:migrate:redo, command got recorded as "rails db:migrate:redo VERSION=2019…"
   instead of as "rails db:migrate: MigrationName (up)" as intended.

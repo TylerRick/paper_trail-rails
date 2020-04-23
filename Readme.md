@@ -1,6 +1,7 @@
 # PaperTrail::Rails
 
 [![Gem Version][1]][2]
+[![Yard Docs](http://img.shields.io/badge/yard-docs-blue.svg)](https://rdoc.info/github/TylerRick/paper_trail-rails/master)
 
 An extension to [PaperTrail](https://github.com/paper-trail-gem/paper_trail)
 that adds some useful automatic integrations with Rails:
