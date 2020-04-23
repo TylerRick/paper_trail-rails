@@ -73,7 +73,7 @@ module PaperTrail
                 user = config.console.user_for_test.(User.all)
               else
                 puts "Before you make any changes... We need to know who is making the changes, to store in the PaperTrail version history."
-                user = PaperTrail::Rails.select_user(required: config.console.require_reason)
+                user = PaperTrail::Rails.select_user(required: config.console.require_user)
                 puts "Thank you, #{user}! Have a wonderful time!" if user
               end
               user.respond.id
