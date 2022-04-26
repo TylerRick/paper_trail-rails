@@ -80,7 +80,7 @@ module PaperTrail
             end
           )
 
-          if config.console.ask_for_reason
+          if config.console.ask_for_reason && PaperTrail.request.controller_info[:reason].nil?
             @paper_trail_reason ||= PaperTrail::Rails.get_reason(required: config.console.require_reason)
           end
           PaperTrail.update_metadata reason: @paper_trail_reason
