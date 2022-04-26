@@ -1,4 +1,6 @@
 require "bundler/setup"
+require 'rails'
+require 'active_record'
 require "paper_trail/rails"
 
 RSpec.configure do |config|
