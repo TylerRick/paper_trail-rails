@@ -1,12 +1,14 @@
-# paper_trail gem also provides a Railtie (Engine) in this require. It seems to
-# work to just add initializers to that existing Railtie. If needed, though, we
-# could define a different one, like "Railtie".
 require 'rails'
-require 'paper_trail/frameworks/rails/engine'
+require 'paper_trail/frameworks/rails'
 
 module PaperTrail
   module Rails
-    class Engine
+    # lib/paper_trail/rails/console.rb adds an initializer to this Railtie.
+    #
+    # paper_trail gem also provides a Railtie, PaperTrail::Railtie
+    # (paper_trail/frameworks/rails/railtie.rb), but that is different from this one.
+    #
+    class Railtie < ::Rails::Railtie
     end
   end
 end

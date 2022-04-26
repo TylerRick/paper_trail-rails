@@ -50,7 +50,7 @@ module PaperTrail
       end
     end
 
-    class Engine
+    class Railtie
       initializer "paper_trail-rails.set_default_metadata" do |app|
         # There's no way to set up deferred evaluation of PaperTrail.request.controller_info from
         # here like we can with whodunnit, so abuse that property of PaperTrail.request.whodunnit to
