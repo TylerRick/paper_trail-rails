@@ -42,7 +42,7 @@ module PaperTrail
           end
         end
       end
-    end
+    end # module Console
 
     class Configuration
       def console

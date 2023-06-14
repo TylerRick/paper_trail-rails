@@ -1,3 +1,7 @@
+## 0.6.0 (2023-06-14)
+- Include the rails subcommand (`'rails console'`, etc.) in the `command` metadata, not just `'rails'`
+- When using `rails runner`, include the full Ruby code/file that was run in the `command` metadata.
+
 ## 0.5.2 (2022-04-26)
 - Fix: Don't update `PaperTrail.request.controller_info[:reason]` if reason is already present and we didn't even ask for a new reason
 

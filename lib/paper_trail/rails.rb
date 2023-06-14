@@ -1,3 +1,7 @@
+require 'rails'
+# When rails/commands/runner/runner_command.rb is invoked, it won't have already loaded
+# active_record, so we need to load it to avoid getting uninitialized constant ActiveRecord.
+require 'active_record'
 require 'paper_trail'
 
 require_relative 'rails/version'
@@ -27,12 +31,27 @@ module PaperTrail
       # Store some metadata about where the change came from
       def set_default_metadata
         PaperTrail.update_metadata(
-          command: "#{File.basename($PROGRAM_NAME)} #{ARGV.join ' '}",
+          command: default_command,
           source_location: caller.find { |line|
             line.starts_with? ::Rails.root.to_s and
             config.source_location_filter.(line)
           }
         )
+      end
+
+      def default_command
+        program_name = File.basename($PROGRAM_NAME)
+        returning = program_name
+        returning << " #{rails_subcommand}" if program_name == 'rails'
+        returning << " #{ARGV.join(' ')}" if ARGV.any?
+        returning
+      end
+
+      def rails_subcommand
+        regexp = %r{lib/rails/commands/\w+/(\w+)_command\.rb}
+        if (frame = caller.detect { |f| f =~ regexp })
+          frame.match(regexp)[1]
+        end
       end
 
       def select_user(required: false)
