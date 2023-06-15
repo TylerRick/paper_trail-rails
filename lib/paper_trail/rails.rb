@@ -30,8 +30,10 @@ module PaperTrail
 
       # Store some metadata about where the change came from
       def set_default_metadata
-        PaperTrail.update_metadata(
+        PaperTrail.reverse_update_metadata(
           command: default_command,
+        )
+        PaperTrail.update_metadata(
           source_location: caller.find { |line|
             line.starts_with? ::Rails.root.to_s and
             config.source_location_filter.(line)

@@ -1,3 +1,9 @@
+## 0.6.1 (2023-06-15)
+- Add `PaperTrail.metadata`, `PaperTrail.reverse_update_metadata`
+- Change `set_default_metadata` to only set `command` to `default_command` if it hasn't been set yet. This
+  fixes bug where the command set by `RunnerCommandExtensions` got overwritten when the `whodunnit`
+  callback called `set_default_metadata` again.
+
 ## 0.6.0 (2023-06-14)
 - Include the rails subcommand (`'rails console'`, etc.) in the `command` metadata, not just `'rails'`
 - When using `rails runner`, include the full Ruby code/file that was run in the `command` metadata.
